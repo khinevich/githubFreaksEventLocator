@@ -19,7 +19,6 @@ struct ProfileView: View {
 
     // Animation variable for GitHubLogo
     @State private var logoRotationAngle: Double = 0.0
-    
     // FocusState to control the keyboard
     @FocusState private var isTextFieldFocused: Bool
 
@@ -48,7 +47,6 @@ struct ProfileView: View {
     var loggedView: some View {
         ZStack(alignment: .top) {
             Color(.systemGroupedBackground).ignoresSafeArea()
-            
             ScrollView {
                 VStack(spacing: 15) {
                     // --- Profile Header Image with Overlays ---
@@ -70,14 +68,12 @@ struct ProfileView: View {
                                         .foregroundStyle(.gray.opacity(0.5))
                                 }
                         }
-                        
                         // Gradient for text readability
                         LinearGradient(
                             colors: [.clear, .black.opacity(0.7)],
                             startPoint: .center,
                             endPoint: .bottom
                         )
-                        
                         // Name Overlay
                         Text(user?.name ?? "Name Placeholder")
                             .font(.largeTitle.weight(.bold))
@@ -85,7 +81,6 @@ struct ProfileView: View {
                             .shadow(radius: 5)
                             .padding()
                     }
-                    
                     // --- Content Sections ---
                     VStack(spacing: 15) {
                         // Bio Section
@@ -99,7 +94,6 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color(.systemBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        
                         // Age Section
                         HStack {
                             Text("AGE")
@@ -119,12 +113,12 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color(.systemBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        
                         // Log Out Button Section
                         Button(action: {
                             logged.toggle()
                             logger.info("Logging out")
-                        }) {
+                            }
+                        ){
                             HStack {
                                 Spacer()
                                 Text("Log Out")
@@ -162,25 +156,30 @@ struct ProfileView: View {
         }
     }
 
-
     var loginView: some View {
         ZStack {
             Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-            
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 20) {
-                        
                         VStack {
                             Button {
-                                logoRotationAngle += 360
-                                logger.info("Rotating")
+                                // Only allow manual spin if not loading
+                                if !isFakeLoading {
+                                    logoRotationAngle += 360
+                                }
                             } label: {
                                 Image("githublogo")
                                     .resizable()
                                     .frame(width: 100, height: 100)
                                     .rotationEffect(.degrees(logoRotationAngle))
-                                    .animation(.easeInOut(duration: 2), value: logoRotationAngle)
+                                    // This animation modifier dynamically changes based on the loading state
+                                    .animation(
+                                        isFakeLoading
+                                            ? .linear(duration: 1).repeatForever(autoreverses: false)
+                                            : .easeInOut(duration: 2),
+                                        value: logoRotationAngle
+                                    )
                             }
                             .padding(.top, 50)
                             
@@ -195,7 +194,6 @@ struct ProfileView: View {
                                 .font(.body)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.center)
-                            
                             HStack {
                                 Image(systemName: "person.fill")
                                     .foregroundColor(.gray)
@@ -224,20 +222,11 @@ struct ProfileView: View {
                             } onRelease: {
                                 withAnimation { isLoginPressed = false }
                             }
-                            
-                            if isFakeLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                                    .scaleEffect(2)
-                                    .padding(.top, 10)
-                            }
                         }
                         
                         Spacer(minLength: 20)
-                        
                         gitHubDataView
-                        
-                    }
+                        }
                     .padding(.horizontal, 30)
                     .padding(.bottom)
                     .frame(minHeight: geometry.size.height)
@@ -263,7 +252,6 @@ struct ProfileView: View {
                 .font(.body)
                 .foregroundColor(.secondary)
                 .padding(.bottom, 5)
-            
             ForEach(viewModel.profile.gitHubData, id: \.self) { item in
                 HStack(spacing: 10) {
                     Image(systemName: "checkmark.circle.fill")
@@ -285,6 +273,8 @@ extension ProfileView {
     func loadingCall() {
         isTextFieldFocused = false
         isFakeLoading = true
+        // This change to the angle value will trigger the .repeatForever animation
+        logoRotationAngle += 360
         logger.info("Loading...")
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             isFakeLoading = false
