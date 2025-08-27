@@ -46,80 +46,122 @@ struct ProfileView: View {
     }
 
     var loggedView: some View {
-        VStack(spacing: 20) {
-            AsyncImage(url: URL(string: user?.avatarUrl ?? "")) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Rectangle())
-            } placeholder: {
-                Image(systemName: "person.circle")
-                    .resizable()
-            }
-            .frame(width: 250, height: 250)
-            .cornerRadius(12)
-            List {
-                Section("Name") {
-                    Text(user?.name ?? "Name Placeholder")
-                        .font(.title)
-                        //.font(.custom("Oswald-Regular", size: 20))
-                }
-                Section("Bio") {
-                    Text(user?.bio ?? "Bio Placeholder")
-                        .font(.title2)
-                        //.font(.custom("Oswald-Regular", size: 20))
-                }
-                Section {
-                    Picker("Age", selection: $age) {
-                        ForEach(Range(16...64), id: \.self) { age in
-                            Text("\(age)")
-                                .tag("\(age)")
+        ZStack(alignment: .top) {
+            Color(.systemGroupedBackground).ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: 15) {
+                    // --- Profile Header Image with Overlays ---
+                    ZStack(alignment: .bottomLeading) {
+                        // Profile Image
+                        AsyncImage(url: URL(string: user?.avatarUrl ?? "")) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 350)
+                                .clipped()
+                        } placeholder: {
+                            Rectangle()
+                                .fill(.gray.opacity(0.1))
+                                .frame(height: 350)
+                                .overlay {
+                                    Image(systemName: "person.fill")
+                                        .font(.system(size: 80))
+                                        .foregroundStyle(.gray.opacity(0.5))
+                                }
                         }
+                        
+                        // Gradient for text readability
+                        LinearGradient(
+                            colors: [.clear, .black.opacity(0.7)],
+                            startPoint: .center,
+                            endPoint: .bottom
+                        )
+                        
+                        // Name Overlay
+                        Text(user?.name ?? "Name Placeholder")
+                            .font(.largeTitle.weight(.bold))
+                            .foregroundStyle(.white)
+                            .shadow(radius: 5)
+                            .padding()
                     }
+                    
+                    // --- Content Sections ---
+                    VStack(spacing: 15) {
+                        // Bio Section
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("BIO")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(.secondary)
+                            Text(user?.bio ?? "No bio available.")
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        // Age Section
+                        HStack {
+                            Text("AGE")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Picker("Age", selection: $age) {
+                                ForEach(16...99, id: \.self) { number in
+                                    Text("\(number)").tag(number)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .tint(.secondary)
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        // Log Out Button Section
+                        Button(action: {
+                            logged.toggle()
+                            logger.info("Logging out")
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("Log Out")
+                                    .font(.body.weight(.semibold))
+                                    .foregroundColor(.red)
+                                Spacer()
+                            }
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(.systemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    .padding([.horizontal, .bottom])
                 }
-                Button("Log out", action: {
-                    logged.toggle()
-                    logger.info("Logging out")
-                }
-                )
             }
         }
-        // Adds an asynchronous task to perform before this view appears.
+        .ignoresSafeArea(edges: .top)
         .task {
             do {
                 user = try await viewModel.getUser()
-                logger.info("Recieved Information form Server")
-            } catch GitHubErrors.invalidURL {
-                alertWindowShown.toggle()
-                errorText = "Invalid Username"
-                logger.info("Invalid Username")
-            } catch GitHubErrors.invalidData {
-                alertWindowShown.toggle()
-                errorText = "Invalid Data or Username"
-                logger.info("Invalid Data or Username")
-            } catch GitHubErrors.invalidResponse {
-                alertWindowShown.toggle()
-                errorText = "Invalid Response"
-                logger.info("Invalid Response")
+                logger.info("Received Information from Server")
             } catch {
-                alertWindowShown.toggle()
-                errorText = "Unknown Error"
-                logger.info("Unknown Error")
+                errorText = "Could not load profile."
+                alertWindowShown = true
+                logger.error("Error fetching user: \(error.localizedDescription)")
             }
         }
-        .alert(errorText,
-               isPresented: $alertWindowShown) {
-            Button("Log out",
-                   role: .destructive,
-                   action: {
+        .alert(errorText, isPresented: $alertWindowShown) {
+            Button("Log out", role: .destructive) {
                 logged.toggle()
-                logger.info("Logging out")
-                }
-            )
+            }
         } message: {
-            Text("Yout currently logged as UNKNOWN user. Log out and try again.")
+            Text("There was an issue fetching your GitHub data. Please try again.")
         }
     }
+
 
     var loginView: some View {
         ZStack {
@@ -129,7 +171,6 @@ struct ProfileView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         
-                        // --- Top Section ---
                         VStack {
                             Button {
                                 logoRotationAngle += 360
@@ -149,7 +190,6 @@ struct ProfileView: View {
                         }
                         .padding(.bottom, 30)
                         
-                        // --- Input Section ---
                         VStack(spacing: 15) {
                             Text("Enter your GitHub username to continue")
                                 .font(.body)
@@ -165,7 +205,7 @@ struct ProfileView: View {
                                     .disableAutocorrection(true)
                                     .font(.body)
                                     .padding(.vertical, 16)
-                                    .focused($isTextFieldFocused) // Link TextField to FocusState
+                                    .focused($isTextFieldFocused)
                             }
                             .background(Color(.systemBackground))
                             .cornerRadius(12)
@@ -202,11 +242,10 @@ struct ProfileView: View {
                     .padding(.bottom)
                     .frame(minHeight: geometry.size.height)
                     .toolbar {
-                        // Add a toolbar specifically for the keyboard
                         ToolbarItemGroup(placement: .keyboard) {
-                            Spacer() // Pushes the button to the right
+                            Spacer()
                             Button("Done") {
-                                isTextFieldFocused = false // Dismisses the keyboard
+                                isTextFieldFocused = false
                             }
                         }
                     }
@@ -244,7 +283,7 @@ struct ProfileView: View {
 
 extension ProfileView {
     func loadingCall() {
-        isTextFieldFocused = false // Dismiss keyboard before loading
+        isTextFieldFocused = false
         isFakeLoading = true
         logger.info("Loading...")
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
