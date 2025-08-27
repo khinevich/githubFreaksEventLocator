@@ -33,7 +33,6 @@ struct ProfileView: View {
 
     let logger = Logger()
 
-    // Determines, which View has to be shown
     var body: some View {
         if logged == true {
             loggedView
@@ -81,7 +80,7 @@ struct ProfileView: View {
                 )
             }
         }
-        // Adds an asynchronous task to perform before this view appears.
+        // asynchronous task to perform before this view appears.
         .task {
             do {
                 user = try await viewModel.getUser()
@@ -119,64 +118,105 @@ struct ProfileView: View {
     }
 
     var loginView: some View {
-        VStack {
-            gitHubView
-            Button {
-                loadingCall()
-            } label: {
-                Text("Login")
-            }
-            .modifier(ProfileViewModifier(color: .green))
-            .scaleEffect(isLoginPressed ? 1.05 : 1.0)
-            .opacity(isLoginPressed ? 0.6 : 1.0)
-            .pressEvents {
-                withAnimation(.easeInOut(duration: 0.1)) {
-                    isLoginPressed = true
+        ZStack {
+            Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            VStack(spacing: 20) {
+                Spacer()
+                
+                // GitHub Logo
+                Button {
+                    logoRotationAngle += 360
+                    logger.info("Rotating")
+                } label: {
+                    Image("githublogo") //
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .rotationEffect(.degrees(logoRotationAngle))
+                        .animation(.easeInOut(duration: 2), value: logoRotationAngle)
                 }
-            } onRelease: {
-                withAnimation {
-                    isLoginPressed = false
-                }
-            }
-            Spacer()
-                .frame(height: 50)
-            if isFakeLoading {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                    .scaleEffect(3)
-            }
-            Spacer()
-                .frame(height: 50)
-            gitHubDataView
-        }
-    }
 
-    var gitHubView: some View {
-        VStack {
-            Button {
-                logoRotationAngle += 360
-                logger.info("Rotating")
-            } label: {
-                Image("githublogo")
-                    .resizable()
-                    .frame(width: 120, height: 120)
-                    .rotationEffect(.degrees(logoRotationAngle))
-                    .animation(.easeInOut(duration: 2), value: logoRotationAngle)
-            }
-            Text("GitHub login")
-            TextField("GitHub username", text: viewModel.profile.$githubusername)
-                .textCase(.lowercase)
+                // Header Text
+                Text("Login")
+                    .font(.custom("Oswald-Regular", size: 40)) //
+                    .fontWeight(.bold)
+
+                Text("Enter your GitHub username to continue")
+                    .font(.callout)
+                    .foregroundColor(.gray)
+
+                // Username TextField
+                HStack {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.gray)
+                    TextField("GitHub Username", text: viewModel.profile.$githubusername) //
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                }
                 .padding()
-                .modifier(ProfileViewModifier(color: .blue))
+                .background(Color.white)
+                .cornerRadius(12)
+                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 5)
+
+                // Login Button
+                Button {
+                    loadingCall()
+                } label: {
+                    Text("Login")
+                }
+                .modifier(ProfileViewModifier(color: .blue)) //
+                .scaleEffect(isLoginPressed ? 1.05 : 1.0)
+                .opacity(isLoginPressed ? 0.6 : 1.0)
+                .pressEvents {
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        isLoginPressed = true
+                    }
+                } onRelease: {
+                    withAnimation {
+                        isLoginPressed = false
+                    }
+                }
+                
+                // Loading Indicator
+                if isFakeLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        .scaleEffect(2)
+                        .padding(.top)
+                }
+                
+                Spacer()
+                
+                // GitHub Data Requirements View
+                gitHubDataView
+                    .padding(.bottom)
+
+            }
+            .padding(.horizontal, 30)
         }
     }
 
     var gitHubDataView: some View {
-        Section("Make sure your GitHub has following data:") {
-            List(viewModel.profile.gitHubData, id: \.self) {
-                Text($0)
+        VStack(spacing: 10) {
+            Text("Make sure your GitHub profile includes:")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 5)
+            
+            ForEach(viewModel.profile.gitHubData, id: \.self) { item in //
+                HStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                    Text(item)
+                        .font(.footnote)
+                    Spacer()
+                }
             }
         }
+        .padding(20)
+        .background(Color.white.opacity(0.8))
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 5)
+
     }
 }
 
