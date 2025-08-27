@@ -11,8 +11,8 @@ struct ProfileViewModifier: ViewModifier {
     let color: Color
     func body(content: Content) -> some View {
         content
-            .font(.headline)
-            .frame(width: 250, height: 48)
+            .font(.title3.weight(.semibold))
+            .frame(maxWidth: .infinity, minHeight: 52)
             .background(Color(color))
             .foregroundColor(.white)
             .cornerRadius(12)
