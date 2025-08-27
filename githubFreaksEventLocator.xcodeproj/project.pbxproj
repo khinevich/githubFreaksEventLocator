@@ -107,9 +107,9 @@
 			children = (
 				516855E72ADAA0A900E118BC /* Info.plist */,
 				516855E02ADA9E6000E118BC /* Font */,
-				51E55A5F2AD7346300A5736E /* Profile Subsystem */,
-				51E55A5E2AD7345100A5736E /* Map Subsystem */,
-				51E55A5D2AD7343000A5736E /* Event Subsystem */,
+				51E55A5F2AD7346300A5736E /* ProfileSubsystem */,
+				51E55A5E2AD7345100A5736E /* MapSubsystem */,
+				51E55A5D2AD7343000A5736E /* EventSubsystem */,
 				51E55A4F2AD733D400A5736E /* GithubFreaksEventLocatorApp.swift */,
 				51E55A512AD733D400A5736E /* MainView.swift */,
 				51E55A532AD733D600A5736E /* Assets.xcassets */,
@@ -126,17 +126,17 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		51E55A5D2AD7343000A5736E /* Event Subsystem */ = {
+		51E55A5D2AD7343000A5736E /* EventSubsystem */ = {
 			isa = PBXGroup;
 			children = (
 				51B5BCE22AD7428E00F36FD7 /* EventView.swift */,
 				5198D2952AD8AC2400887890 /* EventModel.swift */,
 				5198D2972AD8AC4F00887890 /* EventViewModel.swift */,
 			);
-			path = "Event Subsystem";
+			path = EventSubsystem;
 			sourceTree = "<group>";
 		};
-		51E55A5E2AD7345100A5736E /* Map Subsystem */ = {
+		51E55A5E2AD7345100A5736E /* MapSubsystem */ = {
 			isa = PBXGroup;
 			children = (
 				5137DBE22AD9AD2F000B0FAC /* Place Subsystem */,
@@ -144,10 +144,10 @@
 				516F22AB2AD9CB1E00016320 /* MapModel.swift */,
 				516F22AD2AD9CBCE00016320 /* MapViewModel.swift */,
 			);
-			path = "Map Subsystem";
+			path = MapSubsystem;
 			sourceTree = "<group>";
 		};
-		51E55A5F2AD7346300A5736E /* Profile Subsystem */ = {
+		51E55A5F2AD7346300A5736E /* ProfileSubsystem */ = {
 			isa = PBXGroup;
 			children = (
 				5193D8222ADD4FBA007FB18B /* ProfileViewModifier.swift */,
@@ -155,7 +155,7 @@
 				51B5BCE62AD8124300F36FD7 /* ProfileModel.swift */,
 				51B5BCE82AD8124E00F36FD7 /* ProfileViewModel.swift */,
 			);
-			path = "Profile Subsystem";
+			path = ProfileSubsystem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
