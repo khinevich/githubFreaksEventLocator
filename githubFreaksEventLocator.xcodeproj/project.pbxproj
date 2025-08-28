@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5137DBE42AD9AD50000B0FAC /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5137DBE32AD9AD50000B0FAC /* PlaceView.swift */; };
+		515222492E60EDB900BE2AA8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515222482E60EDB900BE2AA8 /* LoginView.swift */; };
+		5152224B2E60EEEC00BE2AA8 /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5152224A2E60EEEC00BE2AA8 /* LoggedInView.swift */; };
 		516855DC2ADA8FB800E118BC /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516855DB2ADA8FB800E118BC /* ViewModifier.swift */; };
 		516855DF2ADA9A8B00E118BC /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 516855DE2ADA9A8B00E118BC /* AlertKit */; };
 		516855E42ADA9EA900E118BC /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 516855E32ADA9EA900E118BC /* Oswald-Regular.ttf */; };
@@ -32,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		5137DBE32AD9AD50000B0FAC /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
+		515222482E60EDB900BE2AA8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		5152224A2E60EEEC00BE2AA8 /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		516855DB2ADA8FB800E118BC /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		516855E32ADA9EA900E118BC /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
 		516855E72ADAA0A900E118BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 				51E55A622AD7349A00A5736E /* ProfileView.swift */,
 				51B5BCE62AD8124300F36FD7 /* ProfileModel.swift */,
 				51B5BCE82AD8124E00F36FD7 /* ProfileViewModel.swift */,
+				515222482E60EDB900BE2AA8 /* LoginView.swift */,
+				5152224A2E60EEEC00BE2AA8 /* LoggedInView.swift */,
 			);
 			path = ProfileSubsystem;
 			sourceTree = "<group>";
@@ -265,9 +271,11 @@
 				51B5BCE12AD7425E00F36FD7 /* MapView.swift in Sources */,
 				51E55A522AD733D400A5736E /* MainView.swift in Sources */,
 				516F22AE2AD9CBCE00016320 /* MapViewModel.swift in Sources */,
+				5152224B2E60EEEC00BE2AA8 /* LoggedInView.swift in Sources */,
 				516F22AC2AD9CB1E00016320 /* MapModel.swift in Sources */,
 				51B5BCE72AD8124300F36FD7 /* ProfileModel.swift in Sources */,
 				516F22B32AD9E17200016320 /* PlaceModel.swift in Sources */,
+				515222492E60EDB900BE2AA8 /* LoginView.swift in Sources */,
 				51E55A502AD733D400A5736E /* GithubFreaksEventLocatorApp.swift in Sources */,
 				51B5BCE32AD7428E00F36FD7 /* EventView.swift in Sources */,
 				5198D2962AD8AC2400887890 /* EventModel.swift in Sources */,
