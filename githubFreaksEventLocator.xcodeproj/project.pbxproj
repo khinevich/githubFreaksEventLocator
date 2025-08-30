@@ -71,6 +71,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51322FCB2E6397C6006EC5F7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				51E55A622AD7349A00A5736E /* ProfileView.swift */,
+				5193D8222ADD4FBA007FB18B /* ProfileViewModifier.swift */,
+				51B5BCE62AD8124300F36FD7 /* ProfileModel.swift */,
+				51B5BCE82AD8124E00F36FD7 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		51322FCC2E639959006EC5F7 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
 		5137DBE22AD9AD2F000B0FAC /* Place Subsystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,9 +127,10 @@
 		51E55A4E2AD733D400A5736E /* githubFreaksEventLocator */ = {
 			isa = PBXGroup;
 			children = (
+				51322FCC2E639959006EC5F7 /* Supporting */,
 				516855E72ADAA0A900E118BC /* Info.plist */,
 				516855E02ADA9E6000E118BC /* Font */,
-				51E55A5F2AD7346300A5736E /* ProfileSubsystem */,
+				51E55A5F2AD7346300A5736E /* UserSubsystem */,
 				51E55A5E2AD7345100A5736E /* MapSubsystem */,
 				51E55A5D2AD7343000A5736E /* EventSubsystem */,
 				51E55A4F2AD733D400A5736E /* GithubFreaksEventLocatorApp.swift */,
@@ -151,17 +170,14 @@
 			path = MapSubsystem;
 			sourceTree = "<group>";
 		};
-		51E55A5F2AD7346300A5736E /* ProfileSubsystem */ = {
+		51E55A5F2AD7346300A5736E /* UserSubsystem */ = {
 			isa = PBXGroup;
 			children = (
-				5193D8222ADD4FBA007FB18B /* ProfileViewModifier.swift */,
-				51E55A622AD7349A00A5736E /* ProfileView.swift */,
-				51B5BCE62AD8124300F36FD7 /* ProfileModel.swift */,
-				51B5BCE82AD8124E00F36FD7 /* ProfileViewModel.swift */,
+				51322FCB2E6397C6006EC5F7 /* Profile */,
 				515222482E60EDB900BE2AA8 /* LoginView.swift */,
 				5152224A2E60EEEC00BE2AA8 /* LoggedInView.swift */,
 			);
-			path = ProfileSubsystem;
+			path = UserSubsystem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

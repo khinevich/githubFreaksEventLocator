@@ -18,7 +18,6 @@ import OSLog
         let endpoint = "https://api.github.com/users/\(profile.githubusername)"
         guard let url = URL(string: endpoint) else { throw GitHubErrors.invalidURL}
         // actually this error will be never thrown as url will be always right
-        // 
 
         // GET Request, data: JSON, response: http responce code
         let (data, response) = try await URLSession.shared.data(from: url)
