@@ -1,0 +1,16 @@
+name: githubFreaksEventLocator
+#settings:
+#  DEVELOPMENT_TEAM: Mikhail Khinevich
+targets:
+  githubFreaksEventLocator:
+    type: application
+    platform: iOS # for multiple platforms: [iOS, visionOS]
+    deploymentTarget:
+      iOS: 18.0
+    sources: [githubFreaksEventLocator]
+    settings:
+      TARGETED_DEVICE_FAMILY: 1 # for visionOS: [1, 7]
+      PRODUCT_NAME: GFF
+      INFOPLIST_FILE: githubFreaksEventLocator/Supporting/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: com.khinevich.githubFreaksEventLocator
+# add info plist
