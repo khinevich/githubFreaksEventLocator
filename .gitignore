@@ -1,0 +1,3 @@
+# Ignore projectfiles now that they are generated
+*.xcodeproj
+*.xcworkspace

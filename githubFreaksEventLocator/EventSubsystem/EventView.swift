@@ -5,8 +5,7 @@
 //  Created by Mikhail Khinevich on 11.10.23.
 //
 
-import SwiftUI
-import AlertKit
+import SwiftUI 
 import OSLog
 
 struct EventView: View {
@@ -33,12 +32,6 @@ struct EventView: View {
                     // Idk i have to figure this out the default value for the map item, i do it later by myself)
                     // }
                     logger.info("Updating Event List")
-                      AlertKitAPI.present(
-                        title: "Added",
-                        icon: .done,
-                        style: .iOS17AppleMusic,
-                        haptic: .success
-                    )
                 })
             }
             .frame(width: 370)
