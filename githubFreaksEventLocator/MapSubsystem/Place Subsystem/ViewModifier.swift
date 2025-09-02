@@ -1,6 +1,6 @@
 //
 //  ViewModifier.swift
-//  BarFriendFinder
+//  GithubFreaksEventLocatorApp
 //
 //  Created by Mikhail Khinevich on 14.10.23.
 //

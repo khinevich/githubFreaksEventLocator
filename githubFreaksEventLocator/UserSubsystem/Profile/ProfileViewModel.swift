@@ -1,6 +1,6 @@
 //
 //  ProfileViewModel.swift
-//  BarFriendFinder
+//  GithubFreaksEventLocatorApp
 //
 //  Created by Mikhail Khinevich on 12.10.23.
 //

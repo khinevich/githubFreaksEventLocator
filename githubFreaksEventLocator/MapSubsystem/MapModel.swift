@@ -1,6 +1,6 @@
 //
 //  MapModel.swift
-//  BarFriendFinder
+//  GithubFreaksEventLocatorApp
 //
 //  Created by Mikhail Khinevich on 13.10.23.
 //
