@@ -61,7 +61,6 @@ struct MapView: View {
 }
 
 extension CLLocationCoordinate2D {
-    // Extension to MapKit struct, userLocation coordinates (Marienplatz)
     static var userLocation: CLLocationCoordinate2D {
         return .init(latitude: 48.137154, longitude: 11.576124)
     }

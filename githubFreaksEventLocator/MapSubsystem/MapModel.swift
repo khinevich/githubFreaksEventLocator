@@ -8,5 +8,4 @@
 import Foundation
 struct MapModel {
     var eventList: [EventModel]
-    // For future implementations
 }

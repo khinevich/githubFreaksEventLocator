@@ -59,5 +59,4 @@ TODO ADD Diagram
 | BFF 3 | Enable 3D-View around                                                             |
 | BFF 4 | Add Event                                                                         |
 | BFF 5 | Open in Maps function, with more precise location information                     |
-| BFF 6 | Dark Mode availability                                                            |
 

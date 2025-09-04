@@ -27,10 +27,6 @@ struct EventView: View {
                               axis: .vertical).frame(height: 60)
                 }
                 Button("Add Event", action: {
-                    // if viewModelPlace.mapSelection != nil {
-                    //    viewModel.updateEventList(viewModelPlace.mapSelection ??
-                    // Idk i have to figure this out the default value for the map item, i do it later by myself)
-                    // }
                     logger.info("Updating Event List")
                 })
             }
